@@ -9,19 +9,19 @@ namespace Ecommerce.BL
 {
     public interface IProductManager
     {
-        IEnumerable<ReadproductDto> GetAll();
-        ReadproductDto GetProductById(int id);
-        ReadproductDto AddProduct(WriteProductDto writeProductDto);
-        ReadproductDto RemoveProduct(DeleteProductDto deleteProductDto);
+      Task<  IEnumerable<ReadproductDto> >GetAll();
+       Task< ReadproductDto> GetProductById(int id);
+      Task< ReadproductDto> AddProduct(WriteProductDto writeProductDto);
+      Task< ReadproductDto> RemoveProduct(DeleteProductDto deleteProductDto);
 
 
-        ReadproductDto SearchProductByName(string Name);
-       List<ReadproductDto> SearchProductByCategory(int id);
-        List<ReadproductDto> FilterProductByPrices(double Min, double Max);
-        List<ReadproductDto> GetProductPaginated(int PageNumber, int PageSize);
+       Task< ReadproductDto> SearchProductByName(string Name);
+      Task< List<ReadproductDto>> SearchProductByCategory(int id);
+        Task<List<ReadproductDto>> FilterProductByPrices(double Min, double Max);
+        Task<List<ReadproductDto>> GetProductPaginated(int PageNumber, int PageSize);
 
-        IEnumerable<ReadproductDto> FilterProductByRate(int rate);
-        IEnumerable<ReadproductDto> FilterProductByAvailability(bool ava);
+        Task<IEnumerable<ReadproductDto>> FilterProductByRate(int rate);
+        Task<IEnumerable<ReadproductDto>> FilterProductByAvailability(bool ava);
 
     }
 }

@@ -17,16 +17,16 @@ namespace Ecommerce.API.Controllers
             this.categoryManager = categoryManager;
         }
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(categoryManager.GetAll());    
+            return  Ok( await categoryManager.GetAll());    
         }
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<ReadCategory> GetById(int id)
+        public async Task< ActionResult<ReadCategory>> GetById(int id)
         {
-               var category =  categoryManager.GetById(id);
+               var category =  await categoryManager.GetById(id);
             if (category == null)
             {
                 return NotFound();
@@ -36,15 +36,15 @@ namespace Ecommerce.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ReadCategory> Add(WriteCategory writeCategory)
+        public async Task<ActionResult<ReadCategory>> Add(WriteCategory writeCategory)
         {
-            return categoryManager.AddCategory(writeCategory);
+            return await categoryManager.AddCategory(writeCategory);
         }
 
         [HttpDelete]
-        public ActionResult<ReadCategory> Delete(DeleteCategoryDto deleteCategoryDto)
+        public async Task< ActionResult<ReadCategory>> Delete(DeleteCategoryDto deleteCategoryDto)
         {
-            return categoryManager.DeleteCategory(deleteCategoryDto);
+            return await categoryManager.DeleteCategory(deleteCategoryDto);
         }
 
 

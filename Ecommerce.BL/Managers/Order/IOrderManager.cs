@@ -11,7 +11,7 @@ namespace Ecommerce.BL
     public interface IOrderManager
     {
         Task createOrder(CreateOrderdto createOrderdto);
-        ReadorderDto GetOrderById(int id);
+       Task< ReadorderDto >GetOrderById(int id);
        Task<ReadorderDto?> GetOrderForUser(string EmailAddress); 
     }
 }

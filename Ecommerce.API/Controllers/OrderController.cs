@@ -29,9 +29,9 @@ namespace Ecommerce.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public  ActionResult<ReadorderDto> GetById(int id)
+        public async Task< ActionResult<ReadorderDto> > GetById(int id)
         {
-          return  orderManager.GetOrderById(id);
+          return await orderManager.GetOrderById(id);
         }
 
         [HttpPost]

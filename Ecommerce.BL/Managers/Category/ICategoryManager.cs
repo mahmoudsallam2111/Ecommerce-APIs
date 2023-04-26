@@ -9,14 +9,14 @@ namespace Ecommerce.BL
 {
     public interface ICategoryManager
     {
-        List<ReadCategory> GetAll();
-        ReadCategory? GetById(int id);
+      Task<  List<ReadCategory>> GetAll();
+      Task<  ReadCategory?> GetById(int id);
 
-        ReadCategory AddCategory(WriteCategory writeCategory);
+      Task<  ReadCategory> AddCategory(WriteCategory writeCategory);
 
-        ReadCategory UpdateCatecory(WriteCategory writeCategory);
+     Task<   ReadCategory > UpdateCatecory(WriteCategory writeCategory);
 
-        ReadCategory DeleteCategory(DeleteCategoryDto deleteCategoryDto);
+      Task<ReadCategory> DeleteCategory(DeleteCategoryDto deleteCategoryDto);
 
 
     }

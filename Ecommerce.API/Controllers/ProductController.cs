@@ -20,33 +20,30 @@ namespace Ecommerce.API.Controllers
         [HttpGet]
         [Route("GetAllProduct")]
         //[Authorize(Policy = "AdminsOnly")]
-        public ActionResult<List<ReadproductDto>> GetAllProduct()
+        public async Task<IActionResult> GetAllProduct()
         {
-            return productManager.GetAll().ToList();
+            var ProductList = await productManager.GetAll();
+            return Ok(ProductList);
         }
 
 
         [HttpGet]
         [Route("{id}")]
         [Authorize(Policy = "Admins_users")]
-        public ActionResult<ReadproductDto> GetProductById(int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
-            return productManager.GetProductById(id);
+               var product = await productManager.GetProductById(id);
+            return (product == null) ? NotFound("error while getting the item") : Ok(product);
         }
 
 
 
         [HttpGet]
         [Route("SearchProductByName")]
-        public ActionResult<ReadproductDto> SearchProductByName(string Name)
+        public async Task<IActionResult> SearchProductByName(string Name)
         {
-            var _product = productManager.SearchProductByName(Name);
-            if (_product == null)
-            {
-                return NotFound();
-            }
-            return _product;
-
+            var _product = await productManager.SearchProductByName(Name);
+           return (_product == null) ? NotFound("The product Does not Exist") : Ok(_product);
         }
 
 
@@ -54,26 +51,28 @@ namespace Ecommerce.API.Controllers
 
         [HttpGet]
         [Route("{min}/{max}")]
-        public ActionResult<List<ReadproductDto>> FilterProductByPrice(double min, double max)
+        public async Task<IActionResult> FilterProductByPrice(double min, double max)
         {
-            return productManager.FilterProductByPrices(min, max);
+             var productlist = await productManager.FilterProductByPrices(min, max);
+
+            return Ok(productlist);
         }
 
 
         [HttpGet]
         [Route("GetProductPaginated/{PageNumber}/{PageSize}")]
-        public ActionResult<List<ReadproductDto>> GetProductPaginated(int PageNumber, int PageSize)
+        public async Task<IActionResult> GetProductPaginated(int PageNumber, int PageSize)
         {
-            return productManager.GetProductPaginated(PageNumber, PageSize);
+            return Ok(await productManager.GetProductPaginated(PageNumber, PageSize));
         }
 
 
 
         [HttpGet]
         [Route("SearchProductByCategory")]
-        public ActionResult<List<ReadproductDto>> SearchProductByCategory(int id)
+        public async Task<ActionResult<List<ReadproductDto>>> SearchProductByCategory(int id)
         {
-              var SearchedProduct  =  productManager.SearchProductByCategory(id);
+              var SearchedProduct  = await productManager.SearchProductByCategory(id);
 
             if (SearchedProduct.Count() == 0)
             {
@@ -85,38 +84,38 @@ namespace Ecommerce.API.Controllers
 
         [HttpGet]
         [Route("FilterProductByRate/{rate}")]
-        public ActionResult<List<ReadproductDto>> FilterProductByRate(int rate)
+        public async Task<ActionResult<List<ReadproductDto>>> FilterProductByRate(int rate)
         {
-             var productList =   productManager.FilterProductByRate(rate).ToList();
+             var productList =  await productManager.FilterProductByRate(rate);
             if (productList.Count()==0)
             {
                 return Ok("There is no Element of This rate");
             }
-            return productList;
+            return Ok(productList);
         }
 
         [HttpGet]
         [Route("FilterProductByAvailability/{ava}")]
-        public ActionResult<List<ReadproductDto>> FilterProductByAvailability(bool ava)
+        public async Task< ActionResult<List<ReadproductDto>>> FilterProductByAvailability(bool ava)
         {
-            return productManager.FilterProductByAvailability(ava).ToList();
+            return Ok(await productManager.FilterProductByAvailability(ava));
         }
 
         [HttpPost]
         [Route("AddNewProduct")]
-        public ActionResult<ReadproductDto> AddNewProduct(WriteProductDto writeProductDto)
+        public async Task< ActionResult<ReadproductDto> >AddNewProduct(WriteProductDto writeProductDto)
         {
 
-            return productManager.AddProduct(writeProductDto);
+            return Ok(await productManager.AddProduct(writeProductDto));
 
         }
 
 
         [HttpDelete]
         [Route("RemoveProduct")]
-        public ActionResult<ReadproductDto> RemoveProduct(DeleteProductDto deleteProductDto)
+        public async Task< ActionResult<ReadproductDto>> RemoveProduct(DeleteProductDto deleteProductDto)
         {
-            return productManager.RemoveProduct(deleteProductDto);
+            return  Ok(await productManager.RemoveProduct(deleteProductDto));
         }
 
 

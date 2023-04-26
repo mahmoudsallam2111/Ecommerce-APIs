@@ -8,10 +8,10 @@ namespace Ecommerce.DAL
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        IEnumerable<TEntity> GetAll();
-        TEntity? GetByID(int id);
-        void Add(TEntity entity);
-        void Update(TEntity entity);
+        Task<IEnumerable<TEntity>> GetAll();
+     Task<TEntity?> GetByID(int id);
+        Task Add(TEntity entity);
+         void Update(TEntity entity);
         void Delete(TEntity entity);
         void SaveChange();
 

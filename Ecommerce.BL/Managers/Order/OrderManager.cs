@@ -26,9 +26,9 @@ namespace Ecommerce.BL
         }
 
 
-       public ReadorderDto GetOrderById(int id)
+       public async Task<ReadorderDto> GetOrderById(int id)
         {
-            var orderfromDb = orderRepository.GetByID(id);
+            var orderfromDb = await orderRepository.GetByID(id);
             if (orderfromDb == null)
             {
                 return new ReadorderDto { 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,37 +17,38 @@ namespace Ecommerce.DAL
             context = Context;
         }
 
-        public  Product? SearchProductByName(string Name)
+        public   async Task<Product?> SearchProductByName(string Name)
         {
-
-            return  context.Set<Product>().FirstOrDefault(p => p.Name == Name);
-
-        }
-        public  List<Product> SearchProductByCategory(int id)
-        {
-            return   context.Set<Product>().Where(c => c.CategoryId == id).ToList();
-
+            return await  context.Set<Product>().FirstOrDefaultAsync(p => p.Name == Name);  
         }
 
-        public List<Product> FilterProductByPrices(double Min, double Max)
+        public  async Task<List<Product>> SearchProductByCategory(int id)
         {
-           return context.Set<Product>().Where(p=> p.Price < Max && p.Price >= Min).ToList();
+            return  await context.Set<Product>().Where(c => c.CategoryId == id).ToListAsync();
+
         }
 
-        public List<Product> GetProductPaginated(int PageNumber, int PageSize)
+        public async Task<List<Product>> FilterProductByPrices(double Min, double Max)
+        {
+            return await context.Set<Product>().Where(p => p.Price < Max && p.Price >= Min).ToListAsync();
+        }
+
+        public async Task< List<Product>> GetProductPaginated(int PageNumber, int PageSize)
         {
            int productToSkip = (PageNumber- 1) * PageSize;
-            return context.Set<Product>().OrderBy(p=>p.Id).Skip(productToSkip).Take(PageSize).ToList();
+            return await context.Set<Product>().OrderBy(p => p.Id).Skip(productToSkip).Take(PageSize).ToListAsync();
         }
 
-        public IEnumerable<Product> FilterProductByRate(int rate)
+        public async Task< IEnumerable<Product>> FilterProductByRate(int rate)
         {
-            return context.Set<Product>().Where(p => p.Rate == rate).ToList();
+            return await context.Set<Product>().Where(p => p.Rate == rate).ToListAsync();
         }
 
-        public IEnumerable<Product> FilterProductByAvailability(bool ava)
+        public async Task< IEnumerable<Product>> FilterProductByAvailability(bool ava)
         {
-            return context.Set<Product>().Where(p =>p.Available==ava).ToList();
+            return await context.Set<Product>().Where(p => p.Available == ava).ToListAsync();
         }
+
+        
     }
 }

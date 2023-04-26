@@ -20,37 +20,37 @@ namespace Ecommerce.BL
 
 
 
-        public List<ReadCategory> GetAll()
+        public async Task< List<ReadCategory> >GetAll()
         {
-            var CategoriesFromDB = categoryRepository.GetAll().ToList();
+            var CategoriesFromDB = await categoryRepository.GetAll();
             return mapper.Map<List<ReadCategory>>(CategoriesFromDB);
         }
 
-        public ReadCategory? GetById(int id)
+        public async Task< ReadCategory? >GetById(int id)
         {
-            var CategoryFromDB = categoryRepository.GetByID(id);
+            var CategoryFromDB = await categoryRepository.GetByID(id);
             return mapper.Map<ReadCategory>(CategoryFromDB);
         }
 
 
-        public ReadCategory AddCategory(WriteCategory writeCategory)
+        public async Task< ReadCategory> AddCategory(WriteCategory writeCategory)
         {
             var categorytoAdd = mapper.Map<Category>(writeCategory);
-            categoryRepository.Add(categorytoAdd);
+          await  categoryRepository.Add(categorytoAdd);
             categoryRepository.SaveChange();
             return mapper.Map<ReadCategory>(categorytoAdd);
         }
 
-        public ReadCategory DeleteCategory(DeleteCategoryDto deleteCategoryDto)
+        public async Task< ReadCategory> DeleteCategory(DeleteCategoryDto deleteCategoryDto)
         {
-            var categoryFromDb = categoryRepository.GetByID(deleteCategoryDto.Id);
+            var categoryFromDb = await categoryRepository.GetByID(deleteCategoryDto.Id);
             categoryRepository.Delete(categoryFromDb);
             categoryRepository.SaveChange();
             return mapper.Map<ReadCategory>(categoryFromDb);
 
         }
 
-        public ReadCategory UpdateCatecory(WriteCategory writeCategory)
+        public Task< ReadCategory> UpdateCatecory(WriteCategory writeCategory)
         {
             throw new NotImplementedException();
         }

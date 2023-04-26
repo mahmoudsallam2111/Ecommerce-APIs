@@ -32,8 +32,8 @@ namespace Ecommerce.DAL
                 var productitem = productRepository.GetByID(item.Id);
                 var Orderitem = new OrderItem
                 {
-                    ProductId = productitem!.Id,
-                    Price = productitem.Price,
+                    ProductId = item.Id,
+                    Price =(double) item.Price,
                     Quentity = item.Quentity,
                 };
                 items.Add(Orderitem);

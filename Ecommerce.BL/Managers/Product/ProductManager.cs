@@ -19,9 +19,9 @@ namespace Ecommerce.BL
             this.productRepository = productRepository;
             this.mapper = mapper;
         }
-        public IEnumerable<ReadproductDto> GetAll()
+        public async Task< IEnumerable<ReadproductDto>> GetAll()
         {
-            var ProductListFromDb = productRepository.GetAll();
+            var  ProductListFromDb = await productRepository.GetAll();
             return ProductListFromDb.Select(d => new ReadproductDto
             {
                 Name = d.Name,
@@ -32,67 +32,67 @@ namespace Ecommerce.BL
         }
 
 
-        public ReadproductDto AddProduct(WriteProductDto writeProductDto)
+        public async Task<ReadproductDto> AddProduct(WriteProductDto writeProductDto)
         {
-            var productToAdd = mapper.Map<Product>(writeProductDto);
-            productRepository.Add(productToAdd);
+            var productToAdd =  mapper.Map<Product>(writeProductDto);
+              await  productRepository.Add(productToAdd);
             productRepository.SaveChange();
 
-            return mapper.Map<ReadproductDto>(productToAdd);
+            return  mapper.Map<ReadproductDto>(productToAdd);
         }
 
-        public ReadproductDto RemoveProduct(DeleteProductDto deleteProductDto)
+        public async Task<ReadproductDto> RemoveProduct(DeleteProductDto deleteProductDto)
         {
-            var productfromDb = productRepository.GetByID(deleteProductDto.ProductId);
+            var productfromDb = await productRepository.GetByID(deleteProductDto.ProductId);
             productRepository.Delete(productfromDb);
             productRepository.SaveChange();
-            return mapper.Map<ReadproductDto>(productfromDb);
+            return  mapper.Map<ReadproductDto>(productfromDb);
         }
 
-        public ReadproductDto GetProductById (int id)
+        public async Task<ReadproductDto> GetProductById (int id)
         {
-            var productfronDb = productRepository.GetByID(id);
-            return mapper.Map<ReadproductDto>(productfronDb);
+            var productfronDb = await productRepository.GetByID(id);
+            return  mapper.Map<ReadproductDto>(productfronDb);
         }
 
-        public  ReadproductDto SearchProductByName(string Name)
+        public  async Task<ReadproductDto> SearchProductByName(string Name)
         {
-               var ProductFromDb =  productRepository.SearchProductByName(Name);
+               var ProductFromDb = await  productRepository.SearchProductByName(Name);
             return  mapper.Map<ReadproductDto>(ProductFromDb);
         }
 
-        public  List<ReadproductDto> SearchProductByCategory(int id)
+        public  async Task< List<ReadproductDto> > SearchProductByCategory(int id)
         {
-            var ProductListFromDb =  productRepository.SearchProductByCategory(id);
+            var ProductListFromDb = await  productRepository.SearchProductByCategory(id);
 
             return  mapper.Map<List<ReadproductDto>>(ProductListFromDb);
 
         }
 
 
-        public List<ReadproductDto> FilterProductByPrices(double min , double max)
+        public  async Task< List<ReadproductDto>> FilterProductByPrices(double min , double max)
         {
-            var ProductListFromDb = productRepository.FilterProductByPrices(min, max);
+            var ProductListFromDb = await productRepository.FilterProductByPrices(min, max);
 
             return mapper.Map<List<ReadproductDto>>(ProductListFromDb);
         }
 
-        public List<ReadproductDto> GetProductPaginated(int PageNumber, int PageSize)
+        public async Task< List<ReadproductDto>> GetProductPaginated(int PageNumber, int PageSize)
         {
-           var ProductFromDBPaginated = productRepository.GetProductPaginated(PageNumber, PageSize);
+           var ProductFromDBPaginated =await productRepository.GetProductPaginated(PageNumber, PageSize);
 
             return mapper.Map<List<ReadproductDto>>(ProductFromDBPaginated);
         }
 
-        public IEnumerable<ReadproductDto> FilterProductByRate(int rate)
+        public async Task< IEnumerable<ReadproductDto> >FilterProductByRate(int rate)
         {
-            var ProductFromDB = productRepository.FilterProductByRate(rate);
+            var ProductFromDB = await productRepository.FilterProductByRate(rate);
             return mapper.Map<List<ReadproductDto>>(ProductFromDB);
         }
 
-        public IEnumerable<ReadproductDto> FilterProductByAvailability(bool ava)
+        public async Task< IEnumerable<ReadproductDto>> FilterProductByAvailability(bool ava)
         {
-            var ProductFromDB = productRepository.FilterProductByAvailability(ava);
+            var ProductFromDB = await productRepository.FilterProductByAvailability(ava);
             return mapper.Map<List<ReadproductDto>>(ProductFromDB);
         }
 

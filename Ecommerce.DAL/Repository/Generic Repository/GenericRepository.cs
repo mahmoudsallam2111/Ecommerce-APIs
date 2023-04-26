@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,23 +18,23 @@ namespace Ecommerce.DAL
 
 
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return context.Set<TEntity>().ToList();
+            return await context.Set<TEntity>().ToListAsync();
         }
-        public TEntity? GetByID(int id)
+        public async Task<TEntity?> GetByID(int id)
         {
-            return context.Set<TEntity>().Find(id);
+            return await context.Set<TEntity>().FindAsync(id);
         }
 
-        public void Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {
-            context.Set<TEntity>().Add(entity);
+             await context.Set<TEntity>().AddAsync(entity);
         }
 
         public void Delete(TEntity entity)
         {
-            context.Set<TEntity>().Remove(entity);  
+             context.Set<TEntity>().Remove(entity);
         }
 
       
@@ -43,8 +44,9 @@ namespace Ecommerce.DAL
             context.SaveChanges();
         }
 
-        public void Update(TEntity entity)
+        public  void Update(TEntity entity)
         {
+            context.Set<TEntity>().Update(entity);
         }
     }
 }
