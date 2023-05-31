@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.BL
+namespace Ecommerce.DAL
 {
-    public record TokenDto(string TokenString, DateTime expireDate);
-
-
-
+    public interface IWishItemRepository:IGenericRepository<WishItem>
+    {
+    }
 }

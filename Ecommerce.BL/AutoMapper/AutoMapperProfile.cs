@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ecommerce.B;
 using Ecommerce.DAL;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace Ecommerce.BL
             CreateMap<Order, ReadorderDto>().ReverseMap();
             CreateMap<Category, ReadCategory>().ReverseMap();
             CreateMap<Category, WriteCategory>().ReverseMap();
+            CreateMap<WishList , ReadWishlistDto>().ReverseMap();
+            CreateMap<WishList ,  WriteWishlistDto>().ReverseMap();
+            CreateMap<WishItem , ReadWishItemDto>().ReverseMap();
+            CreateMap<WishItem , WriteWishItemDto>().ReverseMap();
+            CreateMap<WishList , ReadwishlistwithItemsDto>().ReverseMap();
+            
             
         }
     }

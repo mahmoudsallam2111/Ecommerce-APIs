@@ -20,7 +20,7 @@ namespace Ecommerce.DAL
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await context.Set<TEntity>().ToListAsync();
+            return await context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
         public async Task<TEntity?> GetByID(int id)
         {

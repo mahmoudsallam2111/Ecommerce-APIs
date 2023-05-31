@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.BL
 {
-  public class loginDto
+   public class DeleteWishlistDto
     {
-        public string UserName { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        public required int Id { get; set; }
     }
 }

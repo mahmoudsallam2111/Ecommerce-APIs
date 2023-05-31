@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.BL
+namespace Ecommerce.BL.Dtos.WishItem
 {
-    public record TokenDto(string TokenString, DateTime expireDate);
-
-
-
+   public class DeleteWishItemDto
+    {
+        public int Id { get; set; }
+    }
 }

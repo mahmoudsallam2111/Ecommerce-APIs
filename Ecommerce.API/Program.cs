@@ -1,13 +1,16 @@
+using Ecommerce.B;
 using Ecommerce.BL;
 using Ecommerce.DAL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.RateLimiting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,8 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IwishListRepository  , WishlistRepository>();
+builder.Services.AddScoped<IWishItemRepository , WishItemRepository>();
 
 #endregion
 
@@ -62,6 +67,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductManager, ProductManager>();
 builder.Services.AddScoped<IOrderManager, OrderManager>();
 builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+builder.Services.AddScoped<IWishListManager , WishListManager >();
+builder.Services.AddScoped<IWshItemManager , WishItemManager>();
     
 #endregion
 
@@ -104,8 +111,8 @@ builder.Services.AddRateLimiter(options =>
 
 
 #region Response Caching
-/// this region to reduce the number of trips the request go to the database
-builder.Services.AddResponseCaching(a => a.MaximumBodySize = 1024);  // this overload makes the MaximumBodySize for caching is 1024 byte instead of 64 mb which is the default 
+///// this region to reduce the number of trips the request go to the database
+//builder.Services.AddResponseCaching(a => a.MaximumBodySize = 1024);  // this overload makes the MaximumBodySize for caching is 1024 byte instead of 64 mb which is the default 
 
 #endregion
 
@@ -205,18 +212,18 @@ app.MapControllers();
 app.UseRateLimiter();
 
 /// this middleware must be come after CORS miidleWare
-app.Use(async (context, next) =>
-{
-    context.Response.GetTypedHeaders().CacheControl =
-        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
-        {
-            Public = true,
-            MaxAge = TimeSpan.FromSeconds(10)   /// caching is going to be for 10 s
-        };
-    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
-        new string[] { "Accept-Encoding" };
+//app.Use(async (context, next) =>
+//{
+//    context.Response.GetTypedHeaders().CacheControl =
+//        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+//        {
+//            Public = true,
+//            MaxAge = TimeSpan.FromSeconds(10)   /// caching is going to be for 10 s
+//        };
+//    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+//        new string[] { "Accept-Encoding" };
 
-    await next();
-});
+//    await next();
+//});
 
 app.Run();

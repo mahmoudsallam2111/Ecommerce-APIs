@@ -11,5 +11,7 @@ namespace Ecommerce.DAL
     public class User:IdentityUser
     {
         public virtual ICollection<Order> Products { get; set; } = new HashSet<Order>();
+        public WishList? WishList { get; set; }
+
     }
 }

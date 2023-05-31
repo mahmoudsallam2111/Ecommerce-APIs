@@ -23,6 +23,8 @@ namespace Ecommerce.DAL
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderItem> orderItems => Set<OrderItem>();
         public DbSet<DeliveryMethod> deliveryMethods => Set<DeliveryMethod>();
+        public DbSet<WishList> wishLists => Set<WishList>();    
+        public DbSet<WishItem> wishItems => Set<WishItem>();    
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -32,7 +34,9 @@ namespace Ecommerce.DAL
 
             builder.Entity<User>().ToTable("User");
             builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
-
+           // builder.Entity<WishItem>().HasKey(a => new { a.prodID, a.whishlstID }); // this is compiste primary key
         }
+
+
     }
 }
